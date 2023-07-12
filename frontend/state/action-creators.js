@@ -1,17 +1,50 @@
+import axios from "axios"
+import { useEffect } from "react"
+import { connect } from "react-redux"
+
+export const MOVE_CLOCKWISE = 'MOVE_CLOCKWISE'
+export const MOVE_COUNTERCLOCKWISE = 'MOVE_COUNTERCLOCKWISE'
+export const SET_QUIZ_INTO_STATE = 'SET_QUIZ_INTO_STATE'
+export const SET_SELECTED_ANSWER = 'SET_SELECTED_ANSWER'
+export const SET_INFO_MESSAGE = 'SET_INFO_MESSAGE'
+export const INPUT_CHANGE = 'INPUT_CHANGE'
+export const RESET_FORM = 'RESET_FORM'
+export const UPDAT_QUIZ = 'UPDAT_QUIZ'
+export const SET_ANSWER_STATE = 'SET_ANSWER_STATE'
+export const SUBMIT = 'SUBMIT'
+export const TEST_PASSED = 'TEST_PASSED'
+export const TURN_OFF = 'TURN_OFF'
+export const TURN_OFF2 = 'TURN_OFF2'
+export const SUBMIT_ON = 'SUBMIT_ON'
+
 // ❗ You don't need to add extra action creators to achieve MVP
-export function moveClockwise() { }
+export function moveClockwise() {
+  return ({ type:  })
+ }
 
-export function moveCounterClockwise() { }
+export function moveCounterClockwise() {
+  return ({ type: })
+ }
 
-export function selectAnswer() { }
+export function selectAnswer() { 
+  return ({ type: })
+}
 
-export function setMessage() { }
+export function setMessage() {
+  return ({ type: })
+ }
 
-export function setQuiz() { }
+export function setQuiz() {
+  return ({ type: })
+ }
 
-export function inputChange() { }
+export function inputChange() {
+  return ({ type: })
+ }
 
-export function resetForm() { }
+export const resetForm() {
+  return ({ type: })
+ }
 
 // ❗ Async action creators
 export function fetchQuiz() {
