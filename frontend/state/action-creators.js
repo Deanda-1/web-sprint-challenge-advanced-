@@ -59,38 +59,49 @@ export const resetForm = (newQuestion, newTrueAnswer, newFalseAnswer) => dispatc
   return ({ type: BUTTON_OFF })
  }
 
- export const fetchQuiz = () => dispatch => {
-  dispatch(setQuiz())
-  axios.get("http://localhost:9000/api/quiz/next")
-  .then(res => { dispatch(upDate(res.data.answers[0].text, res.data.answer[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id)) })
-  .catch(err => console.log(err))
- }
- export const upDateQuiz = (answer1, answer2, question, answer1id, answer2id, quizid) => {
-  return ({ type: UPDAT_QUIZ, payload: answer1, payload2: answer2, payload3: question, payload4: answer1id, payload5: answer2id, payload6: quizid })
- }
- export const 
- export const 
- export const 
- export const 
- export const 
-
+ 
+ 
 
 // ❗ Async action creators
-export function fetchQuiz() {
-  return function (dispatch) {
+export const fetchQuiz = () => dispatch => {
+  dispatch(setQuiz())
+  axios.get("http://localhost:9000/api/quiz/next")
+  .then(res => { dispatch(updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id)) })
+  .catch(err => console.log(err))
     // First, dispatch an action to reset the quiz state (so the "Loading next quiz..." message can display)
     // On successful GET:
     // - Dispatch an action to send the obtained quiz to its state
   }
-}
-export function postAnswer() {
-  return function (dispatch) {
-    // On successful POST:
-    // - Dispatch an action to reset the selected answer state
-    // - Dispatch an action to set the server message to state
-    // - Dispatch the fetching of the next quiz
+
+  export const updateQuiz = (answer1, answer2, question, answer1id, answer2id, quizid) => {
+    return ({ type: UPDATE_QUIZ, payload: answer1, payload2: answer2, payload3: question, payload4: answer1id, payload5: answer2id, payload6: quizid })
   }
+
+export const postAnswer = (initialSelectedAnswerStatea, initialSelectedAnswerStateb, quizid, answerid, answerid2) => dispatch => {
+    if (initialSelectedAnswerStatea === "SELECTED") {
+      axios.post("http://localhost:9000/api/quiz/answer", { "quiz_id": quizid, "answer_id": answerid })
+      .then(res => {
+        const message = `Congrats: "${res.data.question}" is a great question!`
+        dispatch(setMessage(res.data.message));
+        dispatch(addtodata(message))
+      })
+      .catch(err => console.log(err))
+    }
+    if (initialSelectedAnswerStateb === "SELECTED") {
+      axios.post("http://localhost:9000/api/quiz/answer", { "quiz_id": quizid, "answer_id": answerid2 })
+      .then(res => {
+        const message2 = `Congrats: "${res.data.question}" is a great question!`
+        dispatch(setMessage(res.data.message));
+        dispatch(addtodata(message2))
+      })
+      .catch(err => console.log(err))
+    }
+} 
+  
+const addtodata = (res) => {
+  return ({ type: TEST_PASSED, payload: res })
 }
+
 export function postQuiz() {
   return function (dispatch) {
     // On successful POST:
@@ -99,3 +110,19 @@ export function postQuiz() {
   }
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
+
+export const submitButton = () => {
+  return ({ type: SUBMIT })
+}
+
+export const turnoffthemessage = () => {
+  return ({ type: TURN_OFF})
+}
+
+export const turnoffthemessage2 = () => {
+  return ({ type: TURN_OFF2 })
+}
+
+export function submitO () {
+  return ({ type: SUBMIT_ON })
+}
