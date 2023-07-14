@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../state/action-creators'
-import { submitOn, turnoffthemessage2, buttonOff, inputChange, resetForm, } from '../state/action-creators'
+import { SUBMIT_ON, turnoffthemessage2, buttonOff, inputChange, resetForm, } from '../state/action-creators'
 import axios from 'axios'
 
 function Form(props) {
