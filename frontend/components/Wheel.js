@@ -13,6 +13,10 @@ function Wheel(props) {
     moveClockwise();
   }
 
+  const handlecounterclock = () => {
+    moveCounterClockwise()
+  }
+
   return (
     <div id="wrapper">
       <div id="wheel">
