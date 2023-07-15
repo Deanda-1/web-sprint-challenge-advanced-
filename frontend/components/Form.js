@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
     newQuestion: state.form.newQuestion, 
     newTrueAnswer: state.form.newTrueAnswer,
     newFalseAnswer: state.form.newFalseAnswer,
-    clickButton: state.form.clickButton,
+    resetForm: state.form.clickButton,
     showmessage: state.correctAnswer.showmessage,
     clickButton: state.submitOn.clickButton
   }
@@ -57,4 +57,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { submitOn, turnoffthemessage2, inputChange, resetForm, buttonOff}) (Form)
+export default connect(mapStateToProps, { SUBMIT_ON, turnoffthemessage2, inputChange, resetForm, buttonOff}) (Form)

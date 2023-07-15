@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // ❗ You don't need to add extra reducers to achieve MVP
 import { combineReducers } from 'redux'
 import { SUBMIT_ON, TURN_OFF2, UPDATE_QUIZ, SET_SELECTED_ANSWER, SET_QUIZ_INTO_STATE, INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, RESET_FORM, SET_INFO_MESSAGE, SET_ANSWER_STATE, SUBMIT, TEST_PASSED, TURN_OFF } from './action-creators'
@@ -49,6 +50,8 @@ function selectedAnswer(state = answer, action) {
       }
       if (action.payload === "answerb") {
         return ({ initialSelectedAnswerStatea: "Select", initialSelectedAnswerStateb: "SELECTED" })
+
+        
       }
 
       case SUBMIT:
