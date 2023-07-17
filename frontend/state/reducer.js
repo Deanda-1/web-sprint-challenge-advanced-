@@ -4,6 +4,8 @@ import {INPUT_CHANGE, MOVE_CLOCKWISE, MOVE_CONTERCLOCKWISE, RESET_FORM, SET_INFO
 import { combineReducers } from 'redux'
 import axios from 'axios'
 
+export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
+
 const initialWheelState = 0
 const wheel = (state = initialWheelState, action) => {
   switch(action.type) {
@@ -85,4 +87,3 @@ function quiz(state = initialQuizState, action) {
     }
   }
 
-  export default combineReducers({ wheel, quiz, selectedAnswer, infoMessage, form })
