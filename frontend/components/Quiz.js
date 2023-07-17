@@ -1,71 +1,56 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { turnoffthemessage, postAnswer, submitButton, updateQuiz, fetchQuiz, setQuiz, selectAnswer, setMessage } from '../state/action-creators'
+import { fetchQuiz, selectAnswer, postAnswer } from '../state/action-creators'
 import axios from 'axios'
 
-function Quiz(props) {
-  const { turnoffthemessage, postAnswer, submitButton, submitbuttonon, updateQuiz, quizid, answer1id, answer2id, answer1, answer2, question, fetchQuiz, setMessage, initialSelectedAnswerStatea, initialSelectedAnswerStateb, initialQuizState, setQuiz, selectAnswer } = props
-  const quizstate = (initialQuizState) => {
-    if(initialQuizState === false) {
-    useEffect(()=>{
-      axios.get("http://localhost:9000/api/quiz/next")
-      .then(res => {updateQuiz(res.data.answers[0].text, res.data.answers[1].text, res.data.question, res.data.answers[0].answer_id, res.data.answers[1].answer_id, res.data.quiz_id);
-      setQuiz();
-      turnoffthemessage()})
-      .catch(err=> console.log(err)) }
-    ,[]);
-  }
+export function Quiz(props) {
+  if(!props.quiz) {
+    useEffect(() => {
+      props.fetchQuiz(0)
+    }, [])
   }
 
-const handleclick = (e) => {
-  selectAnswer(e.target.id)
-  submitButton()
-}
-
-const handlesubmit = (e) => {
-  e.preventDefault()
-  fetchQuiz() |
-  postAnswer(initialSelectedAnswerStatea, initialSelectedAnswerStateb, quizid, answer1id, answer2id)
-  setQuiz()
-}
-
-quizstate(initialQuizState)
-
-return ( 
-  <div id="wrapper">
-    {
-      initialQuizState === true ? (
-        <>
-        {question.length >=1 ? <h2>{question}</h2>:<h2>What is a closure?</h2>}
-        <div id="quizAnswers">
-          <div className={initialSelectedAnswerStatea === "SELECTED" ? "answer selected" : "answer"}>
-            `${answer1}`
-            <button onClick={handleclick} id="answera">
-              {initialSelectedAnswerStatea}
-            </button>
-          </div>
-        </div>
-        <button onClickd={handlesubmit} disabled={submitbuttonon} id="submitAnswerBtn">Submit answer</button>
-        </>
-      ) : 'Loading next quiz...'
+  const submit = () => {
+    if(props.selected) {
+      const answer = {
+        quiz_id: props.quiz.quiz_id,
+        answer_id: props.selected.answer_id
+      }
+      props.postAnswer(answer)
     }
-  </div>
-)
+  }
+
+  return (
+    <div id="wrapper">
+      {
+        props.quiz? (
+          <>
+          <h2>{props.quiz.question}</h2>
+          <div id="quizAnswers">
+            {props.quiz.answers.map((anser,idx) => {
+              return(
+                <div className={props.selected === answer ? 'answer selected' : 'answer'} key={idx}>
+                  {answer.text}
+                  <button onClick={() => {props.selectAnswer(answer)}}>
+                    {props.selected === answer ? 'SELECTED' : 'select'}
+                  </button>
+                  </div>
+              )
+            })}
+          </div>
+          <button id="submitAnswerBtn" onClick={() => submit()} disabled={props.selected ? false : true}>Submit answer</button>
+          </>
+        ) : 'Loading next quiz...'
+      }
+    </div>
+  )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    initialQuizState: state.quiz.initialQuizState,
-    initialSelectedAnswerStatea: state.selectedAnswer.initialselectedAnswerStatea,
-    initialSelectedAnswerStateb: state.selectedAnswer.initialselectedAnswerStateb,
-    answer1: state.updateQuiz.answer1,
-    answer2: state.updateQuiz.answer2,
-    question: state.updateQuiz.question,
-    answer1id: state.updateQuiz.answer1id,
-    answer2id: state.updateQuiz.answer2id,
-    quizid: state.updateQuiz.quizid,
-    submitbuttonon: state.selectedAnswer.submitbuttonon
+    quiz: state.quiz,
+    selected: state.selectedAnswer
   }
 }
 
-export default connect(mapStateToProps, {turnoffthemessage, postAnswer, submitButton, updateQuiz, setMessage, setQuiz, selectAnswer, fetchQuiz })(Quiz)
+export default connect(mapStateToProps, {fetchQuiz, selectAnswer, postAnswer})(Quiz)

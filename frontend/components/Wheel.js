@@ -1,46 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { turnoffthemessage2, moveClockwise, moveCounterClockwise } from '../state/action-creators'
+import { moveClockwise, moveCounterClockwise } from '../state/action-creators'
 
-function Wheel(props) {
-  const { turnoffthemessage2, wheelState, moveClockwise, moveCounterClockwise } = props
-
-  useEffect(()=>{
-    turnoffthemessage2()
-  },[])
-
-  const handleclockwise = () => {
-    moveClockwise();
-  }
-
-  const handlecounterclock = () => {
-    moveCounterClockwise()
-  }
+export function Wheel(props) {
+  const style = [1,2,3,4,5,6]
 
   return (
     <div id="wrapper">
       <div id="wheel">
-
-          {wheelState === 0 ? <div className="cog active" style={{ "--i": 0 }}>B</div>: <div className="cog" style={{ "--i": 0 }}></div>}
-          {wheelState === 1 ? <div className="cog active" style={{ "--i": 1 }}>B</div>: <div className="cog" style={{ "--i": 1 }}></div>}
-          {wheelState === 2 ? <div className="cog active" style={{ "--i": 2 }}>B</div>: <div className="cog" style={{ "--i": 2 }}></div>}
-          {wheelState === 3 ? <div className="cog active" style={{ "--i": 3 }}>B</div>: <div className="cog" style={{ "--i": 3 }}></div>}
-          {wheelState === 4 ? <div className="cog active" style={{ "--i": 4 }}>B</div>: <div className="cog" style={{ "--i": 4 }}></div>}
-          {wheelState === 5 ? <div className="cog active" style={{ "--i": 5 }}>B</div>: <div className="cog" style={{ "--i": 5 }}></div>}
-
-      </div>
-      <div id="keypad">
-        <button onClick={handlecounterclock} id="counterClockwiseBtn" >Counter clockwise</button>
-        <button onClick={handleclockwise} id="clockwiseBtn">Clockwise</button>
+        {style.map((num, idx) => {
+          return (
+            <div key={num} className={idx === props.wheel ? 'cog active' : 'cog'} style={{ "==i": `${idx}` }}>{idx === props.wheel ? 'B' : ''}</div>
+          )
+        })}
       </div>
     </div>
   )
 }
 
-const mapStateToProps=(state) => {
+const mapStateToProps = (state) => {
   return {
-    wheelState : state.wheel.initialWheelState
+    wheel: state.wheel 
   }
 }
 
-export default connect(mapStateToProps, {turnoffthemessage2, moveClockwise, moveCounterClockwise})(Wheel)
+export default connect(mapStateToProps, {moveClockwise, moveCounterClockwise})(Wheel)
