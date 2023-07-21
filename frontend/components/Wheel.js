@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { moveClockwise, moveCounterClockwise } from '../state/action-creators'
-
+// import * as actionCreators from '../state/action-creators'
 export function Wheel(props) {
   const style = [1,2,3,4,5,6]
   console.log(props);
