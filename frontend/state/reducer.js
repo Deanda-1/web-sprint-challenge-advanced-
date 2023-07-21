@@ -19,17 +19,17 @@ function wheel(state = initialWheelState, action) {
 }
 
 const initialQuizState = null
-function quiz(state = initialQuizState, action) {
+function quiz(state = initialQuizState) {
   return state
 }
 
 const initialSelectedAnswerState = null
-function selectedAnswer(state = initialSelectedAnswerState, action) {
+function selectedAnswer(state = initialSelectedAnswerState) {
   return state
 }
 
 const initialMessageState = ''
-function infoMessage(state = initialMessageState, action) {
+function infoMessage(state = initialMessageState) {
   return state
 }
 
@@ -38,7 +38,7 @@ const initialFormState = {
   newTrueAnswer: '',
   newFalseAnswer: '',
 }
-function form(state = initialFormState, action) {
+function form(state = initialFormState) {
   return state
 }
 
