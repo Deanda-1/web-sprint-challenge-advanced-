@@ -43,6 +43,7 @@ export function Form(props) {
       <input maxLength={50} onChange={onChange} id="newQuestion" value={props.form.newQuestion} placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" value={props.form.newTrueAnswer} placeholder="Enter true answer" />
       <input maxLength={50} onChange={onChange} id="newFalseAnswer" value={props.form.newFalseAnswer} placeholder="Enter false answer" />
+      <button id="submitNewQuzBtn" disabled={checkValues()}>Submit new quiz</button>
     </form>
   )
 }
