@@ -10,20 +10,20 @@ export function Quiz(props) {
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        true ? (
+        props.quiz ? (
           <>
-          <h2>What is a closure</h2>
+          <h2>{props.quiz.question}</h2>
           
           <div id="quizAnswers">
-            <div className="answer selected">
-              A function 
+            <div className={`answer${props.selectedAnswer === props.quiz.answers[0].answer_id ? ' selected' : ''}`}>
+              {props.quiz.answers[0].text}
               <button>
                 SELECTED
               </button>
             </div>
 
-            <div className="answer">
-              An elephant
+            <div className={`answer${props.selectedAnswer === props.quiz.answers[1].answer_id ? ' selected' : ''}`}>
+              {props.quiz.answers[1].text}
               <button>
                 select 
               </button>

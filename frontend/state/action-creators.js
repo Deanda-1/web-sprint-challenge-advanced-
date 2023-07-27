@@ -18,8 +18,8 @@ export function setMessage(message) {
   return ({ type:SET_INFO_MESSAGE, payload: message })
  }
 
-export function setQuiz() { 
-  return ({type: SET_QUIZ_INTO_STATE})
+export function setQuiz(newQuiz) { 
+  return ({type: SET_QUIZ_INTO_STATE, payload: newQuiz})
 }
 
 export function inputChange(evt) {
