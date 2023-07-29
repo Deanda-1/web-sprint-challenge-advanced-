@@ -39,13 +39,13 @@ export function Form(props) {
 
   return (
     <form id="form" onSubmit={onSubmit}>
-      <h2 onClick={() => console.log(props.form)}>Create New Quiz</h2>
+      <h2> onClick={() => console.log(props.form)}</h2>
       <input maxLength={50} onChange={onChange} id="newQuestion" value={props.form.newQuestion} placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" value={props.form.newTrueAnswer} placeholder="Enter true answer" />
-      <input maxLength={50} onChange={onChange} id="newFalseAnswer" value={props.form.newFalseAnswer} placeholder="Enter false answer" />
+      <input maxLength ={50} onChange={onChange} id="newFalceAnswer" value={props.form.newFalseAnswer} placeholder="Enter false answer" />
       <button id="submitNewQuizBtn" disabled={checkValues()}>Submit new quiz</button>
     </form>
   )
 }
 
-export default connect(st => st, actionCreators) (Form)
+export default connect(st => st, actionCreators)(Form)
