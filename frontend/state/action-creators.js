@@ -58,6 +58,7 @@ export function postAnswer(answer) {
   }
 }
 export function postQuiz(quiz) {
+  console.log(quiz);
   return function (dispatch) {
     // On successful POST:
     //  Dispatch the correct message to the appropriate state
