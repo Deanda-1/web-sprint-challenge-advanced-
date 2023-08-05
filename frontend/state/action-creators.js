@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios"
-import {SET_QUIZ_INTO_STATE, SET_INFO_MESSAGE, SET_SELECTED_ANSWER,MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, INPUT_CHANGE, RESET_FORM } from "./action-types"
+import {MOVE_CLOCKWISE, MOVE_COUNTERCLOCKWISE, SET_QUIZ_INTO_STATE, SET_SELECTED_ANSWER, SET_INFO_MESSAGE, INPUT_CHANGE, RESET_FORM } from "./action-types"
 // You don't need to add extra action creators to achieve MVP
 export function moveClockwise(clockwise) {
   return ({type: MOVE_CLOCKWISE, payload: clockwise})
@@ -18,12 +18,12 @@ export function setMessage(message) {
   return ({ type:SET_INFO_MESSAGE, payload: message })
  }
 
-export function setQuiz(quiz) { 
-  return ({type: SET_QUIZ_INTO_STATE, payload: quiz})
+export function setQuiz(newQuiz) { 
+  return ({type: SET_QUIZ_INTO_STATE, payload: newQuiz})
 }
 
-export function inputChange(question) {
-  return ({type: INPUT_CHANGE, payload: question})
+export function inputChange(evt) {
+  return ({type: INPUT_CHANGE, payload: evt.target})
  }
 
 export function resetForm() {
