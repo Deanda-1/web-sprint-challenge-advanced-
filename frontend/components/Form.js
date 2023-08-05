@@ -115,4 +115,4 @@ export function Form(props) {
   );
 }
 
-export default connect((state) => state, actionCreators)(Form)
+export default connect((state) => state, actionCreators)(Form);
