@@ -43,7 +43,12 @@ export function fetchQuiz() {
       .then(({data}) => {
         dispatch ({type: SET_QUIZ_INTO_STATE, payload: data})
       })
-     
+      .catch(err => {
+        const errToDisplay = ERR.RESPONSE ? err.response.data.message : err.message
+        dispatch(setMessage(setToDisplay))
+      })
+    }
+  } 
 export function postAnswer(answer) {
   return function (dispatch) {
     // On successful POST:
@@ -52,8 +57,7 @@ export function postAnswer(answer) {
     //  Dispatch the fetching of the next quiz
     axios.post('http://localhost:9000/api/quiz/answer', answer)
     .then(({data}) => dispatch({type:SET_INFO_MESSAGE, payload:data.message}))
-    .then(res => dispatch({type: SET_QUIZ_INTO_STATE}))
-    .catch(err => dispatch({SET_INFO_MESSAGE, payload: err}))
+   
   }
 }
 export function postQuiz({quiz}) {

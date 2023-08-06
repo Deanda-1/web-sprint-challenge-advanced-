@@ -21,9 +21,9 @@ export function Quiz(props) {
     <div id="wrapper">
       {
         // quiz already in state? Let's use that, otherwise render "Loading next quiz..."
-        props.quiz ? (
+        true ? (
           <>
-          <h2>{props.quiz.question}</h2>
+          <h2>What is a closure</h2>
           
           <div id="quizAnswers">
             {props.quiz.answers.map((answer,idx) => {
