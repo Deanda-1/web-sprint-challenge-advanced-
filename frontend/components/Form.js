@@ -1,51 +1,118 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import * as actionCreators from '../state/action-creators'
-import { object, string, InferType } from "yup";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../state/action-creators';
 
-const formSchema = object().shape({
-  newQuestion:
-    string().min(2).trim().required("Must include question!"),
-  newTrueAnswer:
-    string().min(2).trim().required("Must include True answer!"),
-  newFalseAnswer:
-    string().min(2).trim().required("Must include False answer!")
-})
+import * as yup from 'yup';
+
+const formSchema = yup.object().shape({
+  newQuestion: yup.string().min(2).trim().required('Question is required'),
+  newTrueAnswer: yup.string().min(2).trim().required('True answer is required'),
+  newFalseAnswer: yup.string().min(2).trim().required('False answer is required'),
+});
 
 export function Form(props) {
-  const checkValues = () => {
-    if(props.form.newQuestion.trim() && props.form.newTrueAnswer.trim() && props.form.newFalseAnswer.trim()){
-      return false 
+  const { resetForm, inputChange, postQuiz } = props;
+
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const [errors, setErrors] = useState({
+    newQuestion: '',
+    newTrueAnswer: '',
+    newFalseAnswer: '',  
+  });
+
+  const validateChange = (evt) => {
+    yup.reach(formSchema, evt.target.name)
+    .validate(evt.target.value)
+    .then(() => {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [evt.target.name]: errors.errors[0],    
+      }));
+    });
+  };
+
+  const onChange = (evt) => {
+    inputChange(evt);
+    validateChange(evt);
+  };
+
+  const formRequirementsMet = () => {
+    if (
+      props.form.newQuestion.trim().length > 1 &&
+      props.form.newTrueAnswer.trim().length > 1 &&
+      props.form.newFalseAnswer.trim().length > 1
+    ) {
+      setButtonDisabled(false);
     } else {
-      return true 
+      setButtonDisabled(true);
     }
-  }
+  };
 
-  const onChange = evt => {
-    props.inputChange(evt)
-  }
+  useEffect(() => {
+    formRequirementsMet();
+  }, [
+    props.form.newQuestion,
+    props.form.newTrueAnswer,
+    props.form.newFalseAnswer,
+  ]);
 
-  const onSubmit = evt => {
+  const onSubmit = (evt) => {
     evt.preventDefault();
-    props.resetForm()
-    const formData = {
+    resetForm();
+    const newQuiz = {
       question_text: props.form.newQuestion,
       true_answer_text: props.form.newTrueAnswer,
-      false_answer_text: props.form.newFalseAnswer
-    }
-    props.postQuiz(formData)
-  }
+      false_answer_text: props.form.newFalseAnswer,
+    };
+    postQuiz(newQuiz);
+  };
 
   return (
-    <form id="form" onSubmit={onSubmit}>
-      <h2 onClick={() => console.log(props.form)}>Create New Quiz</h2>
-      <input maxLength={50} onChange={onChange} id="newQuestion" value={props.form.newQuestion} placeholder="Enter question" />
-      <input maxLength={50} onChange={onChange} id="newTrueAnswer" value={props.form.newTrueAnswer} placeholder="Enter true answer" />
-      <input maxLength={50} onChange={onChange} id="newFalseAnswer" value={props.form.newFalseAnswer} placeholder="Enter false answer" />
-      <button id="submitNewQuzBtn" disabled={checkValues()}>Submit new quiz</button>
+    <form id='form' onSubmit={onSubmit}>
+      <h2>Create New Quiz</h2>
+      <input
+      maxLength={50}
+      onChange={onChange}
+      name='newQuestion'
+      value={props.form.newQuestion}
+      id='newQuestion'
+      placeholder='Enter question'
+      />
+
+      {errors.newQuestion && <p>{errors.newQuestion}</p>}
+
+      <input 
+      maxLength={50}
+      onChange={onChange}
+      name='newTrueAnswer'
+      value={props.form.newTrueAnswer}
+      id='newTrueAnswer'
+      placeholder='Enter true answer'
+      />
+
+      {errors.newTrueAnswer && <p>{errors.newTrueAnswer}</p>}
+
+      <input 
+      maxLength={50}
+      onChange={onChange}
+      name='newFalseAnswer'
+      value={props.form.newFalseAnswer}
+      id='newFalseAnswer'
+      placeholder='Enter false answer'
+      />
+
+      {errors.newFalseAnswer && <p>{errors.newFalseAnswer}</p>}
+
+      <button 
+      id='submitNewQuizBtn'
+      disabled={buttonDisabled}>
+        Submit new quiz 
+      </button>
     </form>
-  )
+
+  );
 }
 
-export default connect(st => st, actionCreators) (Form)
+export default connect((state) => state, actionCreators)(Form);
