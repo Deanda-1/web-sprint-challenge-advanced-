@@ -47,8 +47,12 @@ export function fetchQuiz() {
         const errToDisplay = err.response ? err.response.data.message : err.message
         dispatch(setMessage(errToDisplay))
       })
-  }
-}
+      .catch(err => {
+        const errToDisplay = err.RESPONSE ? err.response.data.message : err.message
+        dispatch(setMessage(errToDisplay))
+      })
+    }
+  } 
 export function postAnswer(answer) {
   return function (dispatch) {
     // On successful POST:
@@ -62,6 +66,8 @@ export function postAnswer(answer) {
     }) .finally(() => {
       dispatch(fetchQuiz())
     })
+    .then(({data}) => dispatch({type:SET_INFO_MESSAGE, payload:data.message}))
+   
   }
 }
 export function postQuiz(quiz) {

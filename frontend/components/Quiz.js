@@ -24,7 +24,7 @@ export function Quiz(props) {
   return (
     <div id="wrapper">
       {
-        props.quiz ? (
+        Quiz ? (
           <>
           <h2>{props.quiz.question}</h2>
 
