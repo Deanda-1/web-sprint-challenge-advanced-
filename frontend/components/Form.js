@@ -25,7 +25,8 @@ export function Form(props) {
   const validateChange = (evt) => {
     yup.reach(formSchema, evt.target.name)
     .validate(evt.target.value)
-    .then(() => {
+    .then((res) => {
+      console.log(res);
       setErrors((prevErrors) => ({
         ...prevErrors,
         [evt.target.name]: errors.errors[0],    
@@ -33,9 +34,10 @@ export function Form(props) {
     });
   };
 
-  const onChange = (evt) => {
-    inputChange(evt);
-    validateChange(evt);
+  const onChangeHandle = (evt) => {
+    const {id, value} = evt.target
+    inputChange({id, value});
+    // validateChange(evt);
   };
 
   const formRequirementsMet = () => {
@@ -50,13 +52,11 @@ export function Form(props) {
     }
   };
 
-  useEffect(() => {
-    formRequirementsMet();
-  }, [
-    props.form.newQuestion,
-    props.form.newTrueAnswer,
-    props.form.newFalseAnswer,
-  ]);
+ 
+
+  const isDisabledHandler = () => {
+    return Object.values(props.form).some(value => !value.trim().length)
+  }
 
   const onSubmit = (evt) => {
     evt.preventDefault();
@@ -74,7 +74,7 @@ export function Form(props) {
       <h2>Create New Quiz</h2>
       <input
       maxLength={50}
-      onChange={onChange}
+      onChange={onChangeHandle}
       name='newQuestion'
       value={props.form.newQuestion}
       id='newQuestion'
@@ -85,7 +85,7 @@ export function Form(props) {
 
       <input 
       maxLength={50}
-      onChange={onChange}
+      onChange={onChangeHandle}
       name='newTrueAnswer'
       value={props.form.newTrueAnswer}
       id='newTrueAnswer'
@@ -96,7 +96,7 @@ export function Form(props) {
 
       <input 
       maxLength={50}
-      onChange={onChange}
+      onChange={onChangeHandle}
       name='newFalseAnswer'
       value={props.form.newFalseAnswer}
       id='newFalseAnswer'
@@ -107,7 +107,7 @@ export function Form(props) {
 
       <button 
       id='submitNewQuizBtn'
-      disabled={buttonDisabled}>
+      disabled={isDisabledHandler()}>
         Submit new quiz 
       </button>
     </form>

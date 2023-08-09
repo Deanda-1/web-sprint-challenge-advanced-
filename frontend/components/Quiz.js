@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { fetchQuiz, selectAnswer, postAnswer} from '../state/action-creators'
 
 export function Quiz(props) {
-  if(!props.quiz){
+  
     useEffect(() => {
-      props.fetchQuiz()
+      !props.quiz && props.fetchQuiz()
     }, [])
 
-  }
+  
 
   const submit = () => {
     if(props.selected){
